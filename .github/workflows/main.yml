@@ -1,0 +1,41 @@
+name: My Main Workflow
+
+on:
+  pull_request:
+
+jobs:
+  main-job:
+    name: My Main Job
+    runs-on: ubuntu-latest
+    outputs:
+      YOLO: ${{ steps.yolo-id.outputs.YOLO }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: ./.github/actions/say-hello
+        id: greet
+        with:
+          name: ariana grande
+
+      - run: echo "$GREETING"
+        env:
+          GREETING: ${{ steps.greet.outputs.greeting }}
+
+      - run: echo "YOLO=SWAG" >> $GITHUB_OUTPUT
+        id: yolo-id
+
+      - run: echo "$YOLO" # undefined!
+
+      - run: echo "$YOLO"
+        env:
+          YOLO: ${{ steps.yolo-id.outputs.YOLO }} # set $YOLO from outputs
+
+  second-job:
+    name: My Awesome Second Job
+    runs-on: ubuntu-latest
+    needs:
+      - main-job
+    steps:
+      - run: echo $YOLO
+        env:
+          YOLO: ${{ needs.main-job.outputs.YOLO }}
