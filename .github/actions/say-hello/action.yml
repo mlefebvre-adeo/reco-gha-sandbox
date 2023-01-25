@@ -1,0 +1,8 @@
+name: Hello
+description: Local custom action to say hello
+
+runs:
+  using: composite
+  steps:
+    - run: echo "Hello justin"
+      shell: bash

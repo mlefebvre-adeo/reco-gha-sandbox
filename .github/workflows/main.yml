@@ -12,23 +12,26 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - uses: ./.github/actions/say-hello
+
       - run: echo "Hello World"
 
-      - run: cat README.md
+      - run: cat README.md >> $GITHUB_SUMMARY
 
       - run: echo "YOLO=SWAG" >> $GITHUB_OUTPUT
         id: yolo-id
 
-      - run: echo "$YOLO"
+      - run: echo "$YOLO" # undefined!
 
       - run: echo "$YOLO"
         env:
-          YOLO: ${{ steps.yolo-id.outputs.YOLO }}
+          YOLO: ${{ steps.yolo-id.outputs.YOLO }} # set $YOLO from outputs
 
   second-job:
     name: My Awesome Second Job
     runs-on: ubuntu-latest
-    needs: main-job
+    needs:
+      - main-job
     steps:
       - run: echo $YOLO
         env:
