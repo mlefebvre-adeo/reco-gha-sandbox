@@ -1,8 +1,19 @@
 name: Hello
 description: Local custom action to say hello
 
+inputs:
+  name:
+    required: true
+    description: The name of the person we are greeting
+
+
 runs:
   using: composite
   steps:
-    - run: echo "Hello justin"
+    - run: echo "Hello ${{ inputs.name }}"
       shell: bash
+
+    - run: echo "Hello ${NAME}"
+      shell: bash
+      env:
+        NAME: ${{ inputs.name }}

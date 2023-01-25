@@ -13,10 +13,10 @@ jobs:
       - uses: actions/checkout@v3
 
       - uses: ./.github/actions/say-hello
+        with:
+          name: ariana grande
 
       - run: echo "Hello World"
-
-      - run: cat README.md >> $GITHUB_SUMMARY
 
       - run: echo "YOLO=SWAG" >> $GITHUB_OUTPUT
         id: yolo-id
