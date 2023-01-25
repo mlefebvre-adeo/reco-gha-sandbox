@@ -13,10 +13,13 @@ jobs:
       - uses: actions/checkout@v3
 
       - uses: ./.github/actions/say-hello
+        id: greet
         with:
           name: ariana grande
 
-      - run: echo "Hello World"
+      - run: echo "$GREETING"
+        env:
+          GREETING: ${{ steps.greet.outputs.greeting }}
 
       - run: echo "YOLO=SWAG" >> $GITHUB_OUTPUT
         id: yolo-id

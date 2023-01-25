@@ -6,14 +6,17 @@ inputs:
     required: true
     description: The name of the person we are greeting
 
+outputs:
+  greeting:
+    description: Greets inputs.name
+    value: ${{ steps.greeting.outputs.greeting }}
 
 runs:
   using: composite
   steps:
-    - run: echo "Hello ${{ inputs.name }}"
+    - run: echo "greeting=Hello ${NAME}" >> $GITHUB_OUTPUT
       shell: bash
-
-    - run: echo "Hello ${NAME}"
-      shell: bash
+      id: greeting
       env:
         NAME: ${{ inputs.name }}
+
